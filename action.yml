@@ -1,0 +1,129 @@
+name: action
+description: Github Action for building Bhojpur ISO packages and repositories
+inputs:
+  build:
+    default: false
+    description: "Build missing packages, or specified"
+    required: false
+  downloadMeta:
+    default: false
+    description: "Download packages metadata"
+    required: false
+  downloadAllMeta:
+    default: false
+    description: "Download All packages metadata"
+    required: false
+  downloadFromList:
+    default: false
+    description: "Download All packages metadata by listing all available image tags"
+    required: false
+  fromIndex:
+    default: false
+    description: "Download metadata from index"
+    required: false
+  buildx:
+    default: false
+    description: "Use docker buildx"
+    required: false
+  createRepo:
+    default: false
+    description: "create repository"
+    required: false
+  onlyMissing:
+    default: false
+    description: "Build only missing packages"
+    required: false
+  pushCache:
+    default: false
+    description: "Pushing cache images while building"
+    required: false
+  pushFinalImages:
+    default: false
+    description: "Pushing final images while building"
+    required: false
+  pushFinalImagesRepository:
+    description: "Specify a different final repo"
+    required: false
+  tree:
+    default: ${PWD}/packages
+    description: "create repository"
+    required: false
+  platform:
+    description: "buildx platform"
+    required: false
+  isomgrVersion:
+    default: 0.20.10
+    description: "default Bhojpur ISO manager version"
+    required: false
+  isomgrArch:
+    default: amd64
+    description: "default Bhojpur ISO manager arch"
+    required: false
+  values:
+    description: "Values file"
+    required: false
+  output:
+    default: ${PWD}/build
+    description: "output where to store packages"
+    required: false
+  skipPackages:
+    description: "A space separated list of packages to skip"
+    required: false
+  FINAL_REPO:
+    description: "Final container registry repository"
+    required: false
+  CURRENT_PACKAGE:
+    description: "Current package to build"
+    required: false
+  REPOSITORY_NAME:
+    description: "Repository Name"
+    required: false
+  REPOSITORY_TYPE:
+    description: "Repository Type"
+    required: false
+  PULL_REPOSITORY:
+    description: "Optional pull cache repository"
+    required: false
+  DOCKER_USERNAME:
+    description: "Docker username to log into"
+    required: false
+  DOCKER_PASSWORD:
+    description: "Docker password to log into"
+    required: false
+  DOCKER_ENDPOINT:
+    description: "Optional docker endpoint, e.g. quay.io"
+    required: false
+runs:
+  using: docker
+  image: Dockerfile
+  env:
+    FINAL_REPO: "${{ inputs.FINAL_REPO }}"
+    CURRENT_PACKAGE: "${{ inputs.CURRENT_PACKAGE }}"
+    REPOSITORY_NAME: "${{ inputs.REPOSITORY_NAME }}"
+    REPOSITORY_TYPE: "${{ inputs.REPOSITORY_TYPE }}"
+    PULL_REPOSITORY: "${{ inputs.PULL_REPOSITORY }}"
+    DOCKER_USERNAME: "${{ inputs.DOCKER_USERNAME }}"
+    DOCKER_PASSWORD: "${{ inputs.DOCKER_PASSWORD }}"
+    DOCKER_ENDPOINT: "${{ inputs.DOCKER_ENDPOINT }}"
+  args:
+  - "-build=${{ inputs.build }}"
+  - "-downloadMeta=${{ inputs.downloadMeta }}"
+  - "-downloadAllMeta=${{ inputs.downloadAllMeta }}"
+  - "-downloadFromList=${{ inputs.downloadFromList }}"
+  - "-fromIndex=${{ inputs.fromIndex }}"
+  - "-buildx=${{ inputs.buildx }}"
+  - "-createRepo=${{ inputs.createRepo }}"
+  - "-onlyMissing=${{ inputs.onlyMissing }}"
+  - "-pushCache=${{ inputs.pushCache }}"
+  - "-pushFinalImages=${{ inputs.pushFinalImages }}"
+  - "-pushFinalImagesRepository=${{ inputs.pushFinalImagesRepository }}"
+  - "-tree=${{ inputs.tree }}"
+  - "-platform=${{ inputs.platform }}"
+  - "-isomgrVersion=${{ inputs.isomgrVersion }}"
+  - "-isomgrArch=${{ inputs.isomgrArch }}"
+  - "-values=${{ inputs.values }}"
+  - "-output=${{ inputs.output }}"
+  - "-skipPackages=${{ inputs.skipPackages }}"
+branding:
+  icon: anchor
+  color: gray-dark
