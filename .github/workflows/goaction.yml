@@ -1,0 +1,34 @@
+on:
+  pull_request:
+    branches: [master]
+  push:
+    branches: [master]
+jobs:
+  goaction:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v2
+    - name: Update action files
+      uses: posener/goaction@v1
+      with:
+        name: action
+        github-token: '${{ secrets.GITHUB_TOKEN }}'
+        email: product@bhojpur-consulting.com
+        desc: "Github Action for building Bhojpur ISO packages and repositories"
+        install: "docker,wget,curl,jq"
+        icon: "anchor"
+        color: gray-dark
+    - name: Test
+      uses: ./
+      with:
+        # tree: packages
+        build: true
+    - name: Test
+      uses: ./
+      with:
+        # tree: packages
+        createRepo: true
+    - name: "Check files were built"
+      run: |
+            ls -liah build/
