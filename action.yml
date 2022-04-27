@@ -52,7 +52,7 @@ inputs:
     description: "buildx platform"
     required: false
   isomgrVersion:
-    default: 0.20.10
+    default: 0.0.1
     description: "default Bhojpur ISO manager version"
     required: false
   isomgrArch:
